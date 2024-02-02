@@ -6,7 +6,7 @@ public class Person {
 		private int id;
 		private String name;
 		private int birth;
-		private ArrayList<Movie> movies = new ArrayList<>();
+		private ArrayList<Integer> movie_ids;
 		
 		
 		
@@ -15,6 +15,7 @@ public class Person {
 			this.id = id;
 			this.name = name;
 			this.birth = birth;
+			this.movie_ids = new ArrayList<>();
 		}
 
 		public int getId() {
@@ -35,16 +36,21 @@ public class Person {
 		public void setBirth(int birth) {
 			this.birth = birth;
 		}
-		public ArrayList<Movie> getMovies() {
-			return movies;
-		}
-		public void setMovies(ArrayList<Movie> movies) {
-			this.movies = movies;
-		}
+
 		
+
+
+		public ArrayList<Integer> getMovie_ids() {
+			return movie_ids;
+		}
+
+		public void setMovie_ids(ArrayList<Integer> movie_ids) {
+			this.movie_ids = movie_ids;
+		}
+
 		@Override
 		public String toString() {
-			return "Person [id=" + id + ", name=" + name + ", birth=" + birth + ", movies=" + movies + "]";
+			return "Person [id=" + id + ", name=" + name + ", birth=" + birth + ", movies=" + movie_ids + "]";
 		}
 		
 	

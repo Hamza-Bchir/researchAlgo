@@ -6,13 +6,16 @@ public class Movie {
 	private int id;
 	private String title;
 	private int year;
-	private ArrayList<Person> persons = new ArrayList<>();
+	private ArrayList<Integer> person_ids;
+
+
 
 	public Movie(int id, String title, int year) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.year = year;
+		this.person_ids = new ArrayList<>();
 	}
 	
 	public int getId() {
@@ -33,16 +36,21 @@ public class Movie {
 	public void setYear(int year) {
 		this.year = year;
 	}
-	public ArrayList<Person> getPersons() {
-		return persons;
+
+
+	public ArrayList<Integer> getPerson_ids() {
+		return person_ids;
 	}
-	public void setPersons(ArrayList<Person> persons) {
-		this.persons = persons;
+
+	public void setPerson_ids(ArrayList<Integer> person_ids) {
+		this.person_ids = person_ids;
 	}
 
 	@Override
 	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", year=" + year + ", persons=" + persons + "]";
+		return "Movie [id=" + id + ", title=" + title + ", year=" + year + ", person_ids=" + person_ids + "]";
 	}
+
+
 	
 }
