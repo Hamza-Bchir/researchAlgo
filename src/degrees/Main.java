@@ -1,20 +1,93 @@
 package degrees;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
+	
+	private static String starsPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\small\\stars.csv";
+	private static String moviesPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\small\\movies.csv";
+	private static String peoplePath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\small\\people.csv";
+	
+	private static ArrayList<Person> people = new ArrayList<>();
+	private static ArrayList<Movie> movies = new ArrayList<>();
+	private static ArrayList<String[]> stars = new ArrayList<>();
+	
 	public static void main(String[] args){
+		System.out.println("Loading data ...");
+		loadData();
+		System.out.println("Data loaded successfully");
 		
+		StackFrontier frontier = new StackFrontier();
+		ArrayList<Movie> visited = new ArrayList<>();
+		Scanner scanner = new Scanner(System.in);
 		
-		String starsPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\small\\stars.csv";
-		String moviesPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\small\\movies.csv";
-		String peoplePath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\small\\people.csv";
-		
-		ArrayList<Person> people = new ArrayList<>();
-		ArrayList<Movie> movies = new ArrayList<>();
-		ArrayList<String[]> stars = new ArrayList<>();
+		System.out.println("Enter a source id and a target id:\n");
+		Person source = getPerson(scanner.nextInt());
+		//Person target = getPerson(scanner.nextInt());
+		//displayPeople();
 
+		ArrayList<Action> actions = neighbors(source);
+		for(Action a : actions) {
+			System.out.println(a.toString()+"\n");
+		}
 		
+		
+		
+		
+		
+	}
+	// start_state is a person Object which contains a list of the movies in which he starred in the the method get neighbors will return a list of Persons with who he starred movies with
+	
+	
+	
+
+	/*
+	public static ArrayList<Movie> getNeighbors(Movie movie){
+		for(Integer id : movie.getPerson_ids()) {
+			
+		}
+	}
+	
+	public static Person searchPerson(Integer id) {
+		for(Person p : people) {
+			
+		}
+	}
+
+	*/
+	
+	
+	public static  ArrayList<Action>neighbors(Person p) {
+		ArrayList<Action> actions = new ArrayList<>();
+		for(int movie_id : p.getMovie_ids()) {
+			Movie movie = getMovie(movie_id);
+			for(int person_id : movie.getPerson_ids()) {
+				actions.add(new Action(movie, getPerson(person_id)));
+			}
+		}
+		return actions;
+	}
+	
+	
+	public static Movie getMovie(int id) {
+		for(Movie m : movies) {
+			if(m.getId() == id) {
+				return m;
+			}
+		}
+		return null;
+	}
+	
+	public static Person getPerson(int id) {
+		for(Person p : people) {
+			if(p.getId() == id)
+				return p;
+		}
+		return null;
+	}
+	
+ 	public static void readPeopleData(String path) {
 		BufferedReader reader = null;
 		String line = "";
 		
@@ -33,6 +106,12 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void readMoviesData(String path) {
+		BufferedReader reader = null;
+		String line = "";
+		
 		
 		try {
 			reader = new BufferedReader(new FileReader(moviesPath));
@@ -49,7 +128,12 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	
+	public static void readStarsData(String path) {
+		BufferedReader reader = null;
+		String line = "";
+	
 		try {
 			reader = new BufferedReader(new FileReader(starsPath));
 			reader.readLine();
@@ -63,11 +147,17 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		// Setting up the list of movies in which each person starred in 
+	}
+	
+	public static void loadData() {
+		readPeopleData(starsPath);
+		readMoviesData(moviesPath);
+		readStarsData(starsPath);
+		setUpMoviesList();
+		setUpPersonsList();
+	}
+	
+	public static void setUpMoviesList() {
 		for(Person p : people) {
 			ArrayList<Integer> movie_list = new ArrayList<>();
 			for(String[] r : stars) {
@@ -77,8 +167,9 @@ public class Main {
 			}
 			p.setMovie_ids(movie_list);
 		}
-		
+	}
 	
+	public static void setUpPersonsList() {
 		for(Movie m : movies) {
 			ArrayList<Integer> actors_list = new ArrayList<>();
 			for(String[] r : stars) {
@@ -88,13 +179,23 @@ public class Main {
 			}
 			m.setPerson_ids(actors_list);
 		}
-		
-		
-		
+	}
+
+	public static void displayPeople() {
+		for(Person p : people) {
+			System.out.println(p.toString()+"\n");
+			
+		}
+	}
 	
+	public static void displayMovies() {
+		for(Movie m : movies) {
+			System.out.println(m.toString()+"\n");	
+		}
+	}
+
 	
-	}// From source ID to target ID : Each iteration will look at the movies where the person starred in 
-	// and the actors who played in that movie A state is a movie_id with the actors who played in it
-	// Keep iterating until the target ID is found 
 	
 }
+
+

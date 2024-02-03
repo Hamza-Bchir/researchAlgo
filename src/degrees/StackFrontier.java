@@ -3,7 +3,7 @@ package degrees;
 import java.util.ArrayList;
 
 public class StackFrontier {
-	public ArrayList<Node> frontier = new ArrayList<Node>();
+	public ArrayList<Person> frontier = new ArrayList<>();
 	
 	
 	public void remove() throws Exception {
@@ -16,6 +16,14 @@ public class StackFrontier {
 	
 	public boolean empty() {
 		return this.frontier.size() == 0;
+	}
+	
+	public boolean containsState(Person person) {
+		for(Person p : frontier) {
+			if(person.getId() == p.getId())
+				return true;
+		}
+		return false;
 	}
 	
 }
