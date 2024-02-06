@@ -1,6 +1,8 @@
 package degrees;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -13,52 +15,116 @@ public class Main {
 	private static ArrayList<Movie> movies = new ArrayList<>();
 	private static ArrayList<String[]> stars = new ArrayList<>();
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception{
 		System.out.println("Loading data ...");
 		loadData();
 		System.out.println("Data loaded successfully");
 		
 		StackFrontier frontier = new StackFrontier();
 		ArrayList<Movie> visited = new ArrayList<>();
+		
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("Enter a source id and a target id:\n");
 		Person source = getPerson(scanner.nextInt());
-		//Person target = getPerson(scanner.nextInt());
-		//displayPeople();
+		Person target = getPerson(scanner.nextInt());
+		
+		ArrayList<Action> solution = new ArrayList<>();
+		
 
+		frontier.addFrontier(new Node(source, null, null));
+		/*
+		Node node = frontier.remove();
+		frontier.explored.add(node);
+		node.degree++;
+		
+		ArrayList<Action> actions = actions(node.getState());
+		
+		for(Action a : actions) {
+			System.out.println(a.toString());
+		}
+		
+		System.out.println();
+
+		ArrayList<Node> nodes = neighbors(node);
+		
+		for(Node n : nodes) {
+			System.out.println(n.toString());
+		}
+		
+		for(Node n : nodes) {
+			frontier.addFrontier(n);
+		}
+		System.out.println();
+
+		System.out.println("Fontier :");
+		
+		for(Node n : frontier.frontier) {
+			System.out.println(n.toString());
+		}
+		
+		System.out.println("Explored :");
+		
+		for(Node n : frontier.explored) {
+			System.out.println(n.toString());
+		}
+
+		*/
+
+		while(true) {
+			System.out.println("here");
+			if(frontier.empty()) {
+				System.out.println("Frontier empty there is no solution");
+				break;
+			}
+			
+			Node node = frontier.remove();
+			if(node.degree > 6) {
+				System.out.println("There is no solution");
+				break;
+			}
+			node.degree++;
+
+			
+			if(node.getState().equals(target)) {
+				
+				while(node.getParent() != null) {
+					solution.add(node.getAction());
+					node = node.getParent();
+				}
+				
+				Collections.reverse(Arrays.asList(solution));
+				break;
+			}
+			
+			ArrayList<Node> neighbors = neighbors(node);
+			for(Node n : neighbors) {
+				frontier.addFrontier(n);
+			}
+			frontier.addExplored(node);
+		}
+		
+		for(Action a :solution) {
+			System.out.printf("(%d,%d)",a.movie.getId(),a.person.getId());
+		}
+		
+		
+		/*
+		
 		ArrayList<Action> actions = neighbors(source);
 		for(Action a : actions) {
 			System.out.println(a.toString()+"\n");
 		}
-		
+		*/
 		
 		
 		
 		
 	}
-	// start_state is a person Object which contains a list of the movies in which he starred in the the method get neighbors will return a list of Persons with who he starred movies with
-	
-	
 	
 
-	/*
-	public static ArrayList<Movie> getNeighbors(Movie movie){
-		for(Integer id : movie.getPerson_ids()) {
-			
-		}
-	}
 	
-	public static Person searchPerson(Integer id) {
-		for(Person p : people) {
-			
-		}
-	}
-
-	*/
-	
-	
-	public static  ArrayList<Action>neighbors(Person p) {
+	public static  ArrayList<Action> actions(Person p) {
 		ArrayList<Action> actions = new ArrayList<>();
 		for(int movie_id : p.getMovie_ids()) {
 			Movie movie = getMovie(movie_id);
@@ -66,9 +132,17 @@ public class Main {
 				actions.add(new Action(movie, getPerson(person_id)));
 			}
 		}
+		System.out.println(actions.toString());
 		return actions;
 	}
-	
+
+	public static ArrayList<Node> neighbors(Node n){
+		ArrayList<Node> neighbors = new ArrayList<>();
+		for(Action a : actions(n.getState())) {
+			neighbors.add(new Node(a.person ,n ,a));
+		}
+		return neighbors;
+	}
 	
 	public static Movie getMovie(int id) {
 		for(Movie m : movies) {
@@ -194,8 +268,7 @@ public class Main {
 		}
 	}
 
-	
-	
+		
 }
 
 
