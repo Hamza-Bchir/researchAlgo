@@ -3,6 +3,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -20,65 +21,27 @@ public class Main {
 		loadData();
 		System.out.println("Data loaded successfully");
 		
-		StackFrontier frontier = new StackFrontier();
-		ArrayList<Movie> visited = new ArrayList<>();
-		
+		StackFrontier frontier = new StackFrontier();		
 		Scanner scanner = new Scanner(System.in);
+		List<Action> solution = new ArrayList<>();
+		Integer states_explored = 0;
 		
 		System.out.println("Enter a source id and a target id:\n");
+		
 		Person source = getPerson(scanner.nextInt());
 		Person target = getPerson(scanner.nextInt());
 		
-		ArrayList<Action> solution = new ArrayList<>();
-		
-
 		frontier.addFrontier(new Node(source, null, null));
-		/*
-		Node node = frontier.remove();
-		frontier.explored.add(node);
-		node.degree++;
+		states_explored++;
 		
-		ArrayList<Action> actions = actions(node.getState());
-		
-		for(Action a : actions) {
-			System.out.println(a.toString());
-		}
-		
-		System.out.println();
-
-		ArrayList<Node> nodes = neighbors(node);
-		
-		for(Node n : nodes) {
-			System.out.println(n.toString());
-		}
-		
-		for(Node n : nodes) {
-			frontier.addFrontier(n);
-		}
-		System.out.println();
-
-		System.out.println("Fontier :");
-		
-		for(Node n : frontier.frontier) {
-			System.out.println(n.toString());
-		}
-		
-		System.out.println("Explored :");
-		
-		for(Node n : frontier.explored) {
-			System.out.println(n.toString());
-		}
-
-		*/
-
 		while(true) {
-			System.out.println("here");
 			if(frontier.empty()) {
 				System.out.println("Frontier empty there is no solution");
 				break;
 			}
 			
 			Node node = frontier.remove();
+			states_explored++;
 			if(node.degree > 6) {
 				System.out.println("There is no solution");
 				break;
@@ -92,8 +55,7 @@ public class Main {
 					solution.add(node.getAction());
 					node = node.getParent();
 				}
-				
-				Collections.reverse(Arrays.asList(solution));
+				Collections.reverse(solution);
 				break;
 			}
 			
@@ -103,23 +65,10 @@ public class Main {
 			}
 			frontier.addExplored(node);
 		}
-		
+		System.out.printf("States explored : %-5s\n",states_explored.toString());
 		for(Action a :solution) {
 			System.out.printf("(%d,%d)",a.movie.getId(),a.person.getId());
-		}
-		
-		
-		/*
-		
-		ArrayList<Action> actions = neighbors(source);
-		for(Action a : actions) {
-			System.out.println(a.toString()+"\n");
-		}
-		*/
-		
-		
-		
-		
+		}	
 	}
 	
 
@@ -132,7 +81,6 @@ public class Main {
 				actions.add(new Action(movie, getPerson(person_id)));
 			}
 		}
-		System.out.println(actions.toString());
 		return actions;
 	}
 
@@ -267,8 +215,7 @@ public class Main {
 			System.out.println(m.toString()+"\n");	
 		}
 	}
-
-		
+	
 }
 
 
