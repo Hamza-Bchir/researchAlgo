@@ -18,6 +18,13 @@ public class Person {
 			this.movie_ids = new ArrayList<>();
 		}
 
+		public Person(Integer valueOf, String string) {
+			this.id = valueOf;
+			this.name = string;
+			this.birth = 0;
+			this.movie_ids = new ArrayList<>();
+		}
+
 		public int getId() {
 			return id;
 		}

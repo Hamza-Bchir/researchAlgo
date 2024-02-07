@@ -15,9 +15,16 @@ public class Movie {
 		this.id = id;
 		this.title = title;
 		this.year = year;
+		this.year = 0;
 		this.person_ids = new ArrayList<>();
 	}
 	
+	public Movie(Integer id, String title) {
+		this.id = id;
+		this.title = title;
+		this.person_ids = new ArrayList<>();
+	}
+
 	public int getId() {
 		return id;
 	}

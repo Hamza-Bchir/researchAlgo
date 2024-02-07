@@ -118,7 +118,13 @@ public class Main {
 			reader.readLine();
 			while((line = reader.readLine()) != null) {
 				String[] row = line.split(",");
-				Person newPerson = new Person(Integer.valueOf(row[0]), row[1], Integer.valueOf(row[2]));
+				Person newPerson;
+				if(row.length >= 3) {
+					newPerson = new Person(Integer.valueOf(row[0]), row[1], Integer.valueOf(row[2]));
+				}
+				else {
+					newPerson = new Person(Integer.valueOf(row[0]), row[1]);
+				}
 				people.add(newPerson);	
 			}
 		} catch (FileNotFoundException e) {
@@ -126,6 +132,9 @@ public class Main {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(NumberFormatException e) {
 			e.printStackTrace();
 		}
 	}
@@ -140,7 +149,14 @@ public class Main {
 			reader.readLine();
 			while((line = reader.readLine()) != null) {
 				String[] row = line.split(",");
-				Movie newMovie = new Movie(Integer.valueOf(row[0]), row[1], Integer.valueOf(row[2]));
+				Movie newMovie;
+				if(row.length >= 3) {
+					newMovie = new Movie(Integer.valueOf(row[0]), row[1]);
+				}
+				else {
+					newMovie = new Movie(Integer.valueOf(row[0]), row[1], Integer.valueOf(row[2]));
+
+				}
 				movies.add(newMovie);	
 			}
 		} catch (FileNotFoundException e) {
@@ -148,6 +164,9 @@ public class Main {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
 	}
@@ -161,6 +180,7 @@ public class Main {
 			reader.readLine();
 			while((line = reader.readLine()) != null) {
 				String[] row = line.split(",");
+				System.out.println(row[0]);
 				stars.add(row);
 			}
 		}
@@ -202,20 +222,5 @@ public class Main {
 			m.setPerson_ids(actors_list);
 		}
 	}
-
-	public static void displayPeople() {
-		for(Person p : people) {
-			System.out.println(p.toString()+"\n");
-			
-		}
-	}
-	
-	public static void displayMovies() {
-		for(Movie m : movies) {
-			System.out.println(m.toString()+"\n");	
-		}
-	}
-	
 }
-
 
