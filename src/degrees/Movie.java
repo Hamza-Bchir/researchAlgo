@@ -6,7 +6,7 @@ public class Movie {
 	private int id;
 	private String title;
 	private int year;
-	private ArrayList<Integer> person_ids;
+	public ArrayList<Integer> person_ids;
 
 
 

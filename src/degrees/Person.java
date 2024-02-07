@@ -6,7 +6,7 @@ public class Person {
 		private int id;
 		private String name;
 		private int birth;
-		private ArrayList<Integer> movie_ids;
+		public ArrayList<Integer> movie_ids;
 		
 		
 		
