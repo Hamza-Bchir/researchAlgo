@@ -7,13 +7,7 @@ public class StackFrontier {
 	public ArrayList<Node> explored = new ArrayList<>();
 	
 	
-	
-	
-	public ArrayList<Node> getFrontier() {
-		return frontier;
-	}
-	
-	
+
 	public void addFrontier(Node n) {
 		for(Node node : frontier) {
 			if(node.equals(n))
@@ -27,17 +21,10 @@ public class StackFrontier {
 		frontier.add(n);
 	}
 
-	public ArrayList<Node> getExplored() {
-		return explored;
-	}
-
 	public void addExplored(Node n ) {
 		this.explored.add(n);
 	}
-	
-	public void setExplored(ArrayList<Node> explored) {
-		this.explored = explored;
-	}
+
 
 	public Node remove() throws Exception {
 		if(this.empty()) {
@@ -55,5 +42,6 @@ public class StackFrontier {
 		return this.frontier.size() == 0;
 	}
 	
+
 	
 }

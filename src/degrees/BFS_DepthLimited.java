@@ -1,4 +1,4 @@
-package degrees;
+/*package degrees;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class BFS_DepthLimited {
 	
 	private static String starsPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\stars.csv";
 	private static String moviesPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\movies.csv";
@@ -15,7 +15,7 @@ public class Main {
 	private static ArrayList<Person> people = new ArrayList<>();
 	private static ArrayList<Movie> movies = new ArrayList<>();
 	private static ArrayList<String[]> stars = new ArrayList<>();
-	*/
+	
 	
 	private static HashMap<Integer, Person> people = new HashMap<>();
 	private static HashMap<Integer, Movie> movies = new HashMap<>();
@@ -26,32 +26,32 @@ public class Main {
 		loadData();
 		System.out.println("Data loaded successfully");
 		
-		StackFrontierDepthLimited frontier = new StackFrontierDepthLimited();		
+		StackFrontier frontier = new StackFrontier();		
 		Scanner scanner = new Scanner(System.in);
 		List<Action> solution = new ArrayList<>();
 		Integer states_explored = 0;
 		
 		System.out.println("Enter a source id and a target id:\n");
 		
+		//Person source = getPerson(scanner.nextInt());
 		Person source = people.get(scanner.nextInt());
 		Person target = people.get(scanner.nextInt());
 		
 		frontier.addFrontier(new Node(source, null, null));
-		
 		states_explored++;
-		
-		//displayPeople();
-		
-		
-		
+	
 		while(true) {
 			if(frontier.empty()) {
 				System.out.println("Frontier empty there is no solution");
 				break;
 			}
-
+			
 			Node node = frontier.remove();
 			states_explored++;
+
+			System.out.println("states explored :"+states_explored);
+			node.degree++;
+
 			
 			if(node.getState().equals(target)) {
 				
@@ -72,7 +72,7 @@ public class Main {
 		}
 		System.out.printf("States explored : %-5s\n",states_explored.toString());
 		for(Action a :solution) {
-			System.out.printf("(%-20s,%-20s)",a.movie.getTitle(),a.person.getName());
+			System.out.printf("(%d,%d)",a.movie.getId(),a.person.getId());
 		}	
 	}
 	
@@ -137,7 +137,6 @@ public class Main {
 			while((line = reader.readLine()) != null) {
 				String[] row = line.split(",");
 				Movie newMovie;
-
 				if(row.length >= 3) {
 					newMovie = new Movie(Integer.valueOf(row[0]), row[1]);
 				}
@@ -172,7 +171,7 @@ public class Main {
 				Integer actor_id = Integer.valueOf(row[0]);
 				Integer movie_id = Integer.valueOf(row[1]);
 				if(people.containsKey(actor_id) && movies.containsKey(movie_id)) {
-					people.get(actor_id).movie_ids.add(movie_id);
+					people.get(actor_id).movie_ids.add(Integer.valueOf(movie_id));
 					movies.get(movie_id).person_ids.add(actor_id);
 				}
 			}
@@ -193,3 +192,4 @@ public class Main {
 	}
 }
 
+*/
