@@ -3,10 +3,21 @@ package degrees;
 import java.util.ArrayList;
 
 public class StackFrontierDepthLimited {
-	public ArrayList<Node> frontier = new ArrayList<>();
-	public ArrayList<Node> explored = new ArrayList<>();
-	public int frontierSize = this.frontier.size() - 1;
+	public ArrayList<Node> frontier;
+	public ArrayList<Node> explored;
+	public int frontierSize;
+	public int distance = 6;
 	
+	public StackFrontierDepthLimited(int distance) {
+		this.distance = distance;
+		this.frontier = new ArrayList<>();
+		this.explored = new ArrayList<>();
+	}
+	
+	public StackFrontierDepthLimited() {
+		this.frontier = new ArrayList<>();
+		this.explored = new ArrayList<>();
+	}
 	
 	public void addFrontier(Node n) {
 		for(Node node : frontier) {
@@ -34,10 +45,10 @@ public class StackFrontierDepthLimited {
 		int min = this.minDegree();
 		System.out.println("frontierSize : "+frontierSize);
 		for(int i=this.frontierSize;i>=0;i--) {
-			if(this.frontier.get(i).degree - min <= 6) {
+			if(this.frontier.get(i).degree - min <= this.distance) {
 				Node element = frontier.get(i);
 				int distance = this.frontier.get(i).degree - min;
-				System.out.println("returned element of index :"+i+" distance :"+distance);
+				System.out.println("returned element of index :"+i+" distance :"+ distance);
 				this.frontier.remove(i);
 				return element;
 			}
@@ -45,8 +56,7 @@ public class StackFrontierDepthLimited {
 		System.out.println("return here 3:");
 		return null;
 	}
-	
-	
+		
 	public int minDegree() {
 		int min = Integer.MAX_VALUE;
 		for(Node n : frontier) {
@@ -55,7 +65,6 @@ public class StackFrontierDepthLimited {
 		return min;
 	}
 	
-
 	public void addExplored(Node n ) {
 		this.explored.add(n);
 	}

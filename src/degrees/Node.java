@@ -16,7 +16,6 @@ public class Node {
 		
 	}
 
-
 	public Person getState() {
 		return state;
 	}

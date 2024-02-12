@@ -11,12 +11,7 @@ public class Main {
 	private static String starsPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\stars.csv";
 	private static String moviesPath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\movies.csv";
 	private static String peoplePath = "C:\\Users\\bchir\\Documents\\IT\\Harvard courses\\CS for AI\\Course\\Practice\\degrees\\people.csv";
-	/*
-	private static ArrayList<Person> people = new ArrayList<>();
-	private static ArrayList<Movie> movies = new ArrayList<>();
-	private static ArrayList<String[]> stars = new ArrayList<>();
-	*/
-	
+
 	private static HashMap<Integer, Person> people = new HashMap<>();
 	private static HashMap<Integer, Movie> movies = new HashMap<>();
 	
@@ -26,7 +21,7 @@ public class Main {
 		loadData();
 		System.out.println("Data loaded successfully");
 		
-		StackFrontierDepthLimited frontier = new StackFrontierDepthLimited();		
+		StackFrontierDepthLimited frontier = new StackFrontierDepthLimited(0);		
 		Scanner scanner = new Scanner(System.in);
 		List<Action> solution = new ArrayList<>();
 		Integer states_explored = 0;
@@ -39,10 +34,6 @@ public class Main {
 		frontier.addFrontier(new Node(source, null, null));
 		
 		states_explored++;
-		
-		//displayPeople();
-		
-		
 		
 		while(true) {
 			if(frontier.empty()) {
@@ -76,7 +67,6 @@ public class Main {
 		}	
 	}
 	
-	
 	public static ArrayList<Action> actions(Person p){
 		ArrayList<Action> actions = new ArrayList<>();
 		for(int movie_id : p.getMovie_ids()) {
@@ -95,8 +85,7 @@ public class Main {
 		}
 		return neighbors;
 	}
-		
-	
+			
  	public static void readPeopleData(String path) {
 		BufferedReader reader = null;
 		String line = "";
@@ -158,8 +147,7 @@ public class Main {
 			e.printStackTrace();
 		}
  	}
-	
-	
+		
 	public static void readStarsData(String path) {
 		BufferedReader reader = null;
 		String line = "";
